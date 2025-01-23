@@ -44,17 +44,13 @@ public class SensorService {
     }
 
     public List<MigrationRecord> executeRawQuery() {
-        // Define the raw SQL query
         String sqlQuery = "SELECT * FROM c WHERE c.timestamp > @timestamp";
 
-        // Create SQL query specification with parameters
         SqlQuerySpec querySpec = new SqlQuerySpec(sqlQuery)
                 .setParameters(List.of(new SqlParameter("@timestamp", 1705675100000L)));
 
-        // Execute the query using the correct method signature
         Iterable<MigrationRecord> queryResult = cosmosTemplate.runQuery(querySpec, MigrationRecord.class, MigrationRecord.class);
 
-        // Convert Iterable to List
         return StreamSupport.stream(queryResult.spliterator(), false)
                 .collect(Collectors.toList());
     }

@@ -46,4 +46,8 @@ public class MigrationController {
     public ResponseEntity<List<MigrationRecord>> executeRawQuery() {
         return ResponseEntity.ok(sensorService.executeRawQuery());
     }
+    @GetMapping("/findAfterTimeStamp")
+    public ResponseEntity<List<MigrationRecord>> findAfterTimeStamp(@RequestParam long timestamp) {
+        return ResponseEntity.ok(repository.findAfterTimeStamp(timestamp));
+    }
 }
