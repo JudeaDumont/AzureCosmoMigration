@@ -7,17 +7,18 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 
 @Data
-@Container(containerName = "newBigDataContainer")
+@Container(containerName = "hierarchicalContainer", partitionKeyPath = "/keyA,/keyB,/keyC")
 @Builder
-public class MigrationRecord {
+public class HierarchicalRecord {
     @Id
     private String id;
     private String sourceSystem;
     private String dataPayload;
     private long timestamp;
 
-    @PartitionKey
-    private String partitionKey;
+    private String keyA;
+    private String keyB;
+    private String keyC;
 
     private static String determinePartitionKey(String sourceSystem, long timestamp) {
         return sourceSystem;

@@ -2,18 +2,18 @@ package org.example.azurecosmomigration.repo;
 
 import com.azure.spring.data.cosmos.repository.CosmosRepository;
 import com.azure.spring.data.cosmos.repository.Query;
-import org.example.azurecosmomigration.model.MigrationRecord;
+import org.example.azurecosmomigration.model.HierarchicalRecord;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface MigrationRepository extends CosmosRepository<MigrationRecord, String> {
+public interface HierarchicalRepository extends CosmosRepository<HierarchicalRecord, String> {
 
     @Query("SELECT * FROM c WHERE c.timestamp > @timeStamp")
-    List<MigrationRecord> findAfterTimeStamp(@Param("timeStamp") double timeStamp);
+    List<HierarchicalRecord> findAfterTimeStamp(@Param("timeStamp") double timeStamp);
 
-    @Query("SELECT * FROM c WHERE STARTSWITH(c.partitionKey, '1-')")
-    List<MigrationRecord> compositeKeyQuery();
+    @Query("SELECT * FROM c WHERE c.keyA = '1'")
+    List<HierarchicalRecord> HierarchicalKeyQuery();
 }
